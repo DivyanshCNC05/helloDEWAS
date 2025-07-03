@@ -1,0 +1,72 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-black p-0">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../index.html">
+            <img src="Assets/coad-&-coach-light-logo.png" alt="Logo" class="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5 pe-5 me-4">
+                <li class="nav-item nav-li">
+                    <a class="nav-link nav-a mx-3" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-a mx-3" href="../aboutus.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-a mx-3" href="../ourservice.html">Our Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-a mx-3" href="../portfolio.html">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-a mx-3" href="../contactus.html">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<style>
+    .logo {
+        width: 15rem;
+    }
+
+    .nav-a {    
+        color: rgb(255, 255, 255);
+        transition: 0.3s;
+    }
+    
+    .nav-a:hover, .nav-a.active {
+        color: rgb(197, 196, 196);
+    }
+
+    @media only screen and (min-device-width : 320px) and (max-device-width : 640px) {
+        .logo {
+            width: 12rem;
+        }
+
+        form {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+
+<!-- JavaScript for Active Page Highlighting -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let navLinks = document.querySelectorAll(".nav-a");
+        let currentURL = window.location.href;
+
+        navLinks.forEach(link => {
+            if (link.href === currentURL) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>

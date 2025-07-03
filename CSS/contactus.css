@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: 1s;
+}
+
+body{
+    background: rgb(0, 0, 0);
+background: linear-gradient(90deg, rgb(0, 0, 0) 26%, rgba(1,1,2,1) 78%);
+}
+
+ form{
+    background-color:#000000 ;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+  
+  button[type="submit"] {
+    background-color: #9c9898;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  @media only screen   
+  and (min-device-width : 320px)   
+  and (max-device-width : 640px)  
+  {
+      .hero-h1{
+          font-weight:400;
+          font-size: 2rem;
+          margin-top: 20%;
+          margin-bottom: 1.5%;
+      }
+      .hero-h3{
+          font-weight:400;
+          font-size: 1rem;
+          margin-top: 15%;
+          color: #b1b1b1;
+          margin-bottom: 1%;
+      }
+      .sec-5-col-2{
+        height: 100vh;
+        background-image: url('../Assets/sec-4-bg.png');
+        border: 1px solid white;
+    }
+    .sec-5-col-2{
+        height: 100vh;
+        border: 1px solid white;
+    }
+    .sec-5-col-2 h1{
+      margin-top: 30%;
+      padding-top: 2%;
+  }
+    .sec-5-col-2 h3{
+        margin-top: 1%;
+        font-weight: lighter;
+        font-size: 1.2rem;
+        padding-top: 2%;
+    }
+    
+    .sec-5-col-1{
+        border: 1px solid white;
+    }
+    
+    .sec-5-col-1 h2 {
+        margin-top: 40%;
+        margin-bottom: 4%;
+        line-height: 2.5rem;
+    }
+    .sec-5-col-1 p {
+        margin-bottom: 4%;
+        line-height: 1.75rem;
+        color: #737376;
+    }
+      
+   }
+
+
+@media only screen   
+and (min-width: 1030px)   
+and (max-width: 1605px)  
+{ 
+    .hero-h1{
+        font-weight:400;
+        font-size: 3.5rem;
+        margin-top: 6%;
+        margin-bottom: 1.5%;
+        padding-left: 5%;
+    }
+    .hero-h3{
+        font-weight:400;
+        color: #b1b1b1;
+        font-size: 1.2rem;
+        margin-top: 1%;
+        padding-left: 5%;
+        margin-bottom: 1%;
+    }
+    .sec-5-col-2{
+      height: 100vh;
+      background-image: url('../Assets/sec-4-bg.png');
+      border: 1px solid white;
+  }
+  .sec-5-col-2{
+      height: 100vh;
+      border: 1px solid white;
+  }
+  .sec-5-col-2 h1{
+    margin-top: 30%;
+    padding-top: 2%;
+}
+  .sec-5-col-2 h3{
+      margin-top: 1%;
+      font-weight: lighter;
+      font-size: 1.2rem;
+      padding-top: 2%;
+  }
+  
+  .sec-5-col-1{
+      border: 1px solid white;
+  }
+  
+  .sec-5-col-1 h2 {
+      margin-top: 40%;
+      margin-bottom: 4%;
+      line-height: 2.5rem;
+  }
+  .sec-5-col-1 p {
+      margin-bottom: 4%;
+      line-height: 1.75rem;
+      color: #737376;
+  }
+}
