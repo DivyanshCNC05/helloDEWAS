@@ -1,147 +1,148 @@
-<!-- Remove the container if you want to extend the Footer to full width. -->
-<div class="mt-5 p-0">
+  <style>
+    .footer {
+      background-color: #000;
+      color: #fff;
+      font-size: 15px;
+      padding-top: 50px;
+    }
 
-  <!-- Footer -->
-  <footer class=" text-lg-start text-white" style="background-color: #000000">
-      
-      <!-- Section: Social media -->
-      <section class="d-flex flex-wrap justify-content-between p-4" style="background-color: #252525">
-          <!-- Left -->
-          <div class="me-5">
-              <span>Get connected with us on social networks:</span>
-          </div>
-          <!-- Right -->
-          <div class="d-flex flex-wrap">
-              <a href="https://www.facebook.com/codencoach/" class="text-white me-4"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/codencoach/" class="text-white me-4"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.linkedin.com/in/code-n-coach-/" class="text-white me-4"><i class="bi bi-linkedin"></i></a>
-              <a href="#" class="text-white me-4"><i class="bi bi-whatsapp"></i></a>
-              <a href="https://www.youtube.com/@CodeNCoach" class="text-white me-4"><i class="bi bi-youtube"></i></a>
-          </div>
-      </section>
-      <!-- End of Social media -->
+    .footer h5 {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
 
-      <!-- Section: Links  -->
-      <section class="container my-5">
-        <div class="row footer" id="end">
-      
-            <div class="col-12 col-sm-6 col-lg-3">
-              <div class="footer-inner-div text-white">
-                <img src="Assets/coad-&-coach-light-footer-logo.png" class="img-fluid mb-2" alt="" width="50%">
-                <h5>We Don’t Just Market Brands — We Build Them.</h5>
-                <p style="color: #a4a4a4;">Smart websites, standout visuals, and campaigns that convert — powered by strategy, creativity, and code.</p>
-              </div>
-            </div>
-            
-            <div class="col-12 col-sm-6 col-lg-3">
-              <div class="footer-inner-div text-white">
-                <h3>Quick Links</h3>
-                <ul class="footer-list">
-                    <li><a href="ourservice.html" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Our Work</a></li>
-                    <li><a href="aboutus.html" class="link-offset-2 link-underline link-underline-opacity-0 text-white">About Us</a></li>
-                    <li><a href="contactus.html" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Contact Us</a></li>
-                    <li><a href="portfolio.html" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Blog / Resources</a></li>
-                </ul>
-              </div>
-            </div>
+    .footer hr {
+      width: 2px;
+      height: 18px;
+      background: #fff;
+      display: inline-block;
+      margin-right: 10px;
+      margin-top: -4px;
+    }
 
-            <div class="col-12 col-sm-6  col-lg-3">
-              <div class="footer-inner-div  text-white" >
-                <h3>Services</h3>
-                <ul class="footer-list">
-                    <li><a href="#" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Social Media Management</a></li>
-                    <li><a href="#" class="link-offset-2 link-underline link-underline-opacity-0 text-white">AI-Generated Graphic Designs</a></li>
-                    <li><a href="#" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Website Development & Maintenance</a></li>
-                    <li><a href="#" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Content Creation & Day-to-Day Campaigns</a></li>
-                    <li><a href="#" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Performance Marketing (Meta & Google Ads)</a></l>
-                </ul>
-              </div>
-            </div>
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
 
+    .footer a:hover {
+      text-decoration: underline;
+    }
 
-            <div class="col-12 col-sm-6 col-lg-3">
-              <div class="footer-inner-div text-white">
-                <h3 class="ms-3">Connect Us</h3>
-                <ul class="footer-list fs-0">
-                  <li>
-                    <i class="bi bi-geo-alt-fill"></i> USA (Serving clients worldwide)
-                  </li>
-                  <li>
-                    <i class="bi bi-envelope-at"></i> <a href="mailto:sales@codencoach.com" class="link-offset-2 link-underline link-underline-opacity-0 text-white">Email: sales@codencoach.com</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+    .footer .social-icons a {
+      display: inline-block;
+      background-color: #222;
+      color: white;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 5px;
+      margin-right: 8px;
+      font-size: 16px;
+    }
 
-          </div>
-      </section>
-      <!-- End of Links  -->
+    .footer .contact-info p {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
 
-      <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: #252525">© 2025 
-        <a class="text-white link-offset-2" href="#">Code n Coach.</a>
-           All rights reserved.
+    .footer .must-read li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .footer .bottom-bar {
+      background-color: #0a0a0a;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 14px;
+      margin-top: 30px;
+      border-top: 1px solid #222;
+    }
+
+    .footer .bottom-bar a {
+      color: #4da4f3;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    @media (max-width: 767px) {
+      .footer {
+        text-align: center;
+      }
+
+      .footer .social-icons {
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .footer h5 {
+        margin-top: 30px;
+      }
+    }
+  </style>
+
+<!-- FOOTER SECTION -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+
+      <!-- Column 1 -->
+      <div class="col-md-3">
+        <h5>Hello! Dewas</h5>
+        <div class="contact-info">
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <p>London, United Kingdom</p>
+          <p>Phone: (800) 2255 365</p>
+          <p>Email: blazethemes@gmail.com</p>
+        </div>
+        <div class="social-icons mt-3">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        </div>
       </div>
-      <!-- End Copyright -->
 
-  </footer>
-  <!-- End Footer -->
+      <!-- Column 2 -->
+      <div class="col-md-3">
+        <h5><hr class="d-inline-block">Quick Links</h5>
+        <a href="#">Home</a><br/>
+        <a href="#">Single Post</a><br/>
+        <a href="#">Archive</a><br/>
+        <a href="#">Fashion</a><br/>
+        <a href="#">Lifestyle</a><br/>
+        <a href="#">Contact Us</a>
+      </div>
 
-</div>
-<!-- End of .container -->
+      <!-- Column 3 -->
+      <div class="col-md-3">
+        <h5><hr/>Popular Categories</h5>
+        <a href="#">Blog</a><br/>
+        <a href="#">Privacy</a><br/>
+        <a href="#">Contact</a>
+      </div>
 
+      <!-- Column 4 -->
+      <div class="col-md-3">
+        <h5><hr/>Must Read</h5>
+        <ul class="list-unstyled must-read">
+        
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<style>
-      @media only screen   
-  and (min-device-width : 320px)   
-  and (max-device-width : 640px)  
-  { 
-    .footer-inner-div > h3{
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-    margin-left: 0;
-    width: 10rem;
-  }
-  .footer-list{
-    list-style-type: none;
-    font-size: 1.2rem;
-  }
-  .footer-list > li {
-    margin-bottom:1rem ;
-  }
-  
-  .footer-end > span{
-    width: 35rem;
-    font-size: large;
-  }
-  }
-
-
-
-
+  <!-- Footer Bottom -->
+  <div class="bottom-bar">
+    ©2025– All Right Reserved. Designed and Developed by <a href="#">CodeNCoach</a>
+  </div>
+</footer>
 
 
-  @media only screen   
-  and (min-width: 1030px)   
-  and (max-width: 1605px)  
-  { 
-    .footer-inner-div > h3{
-        margin-bottom: 2rem;
-        margin-top: 15%;
-        width: 10rem;
-      }
-      .footer-list{
-        list-style-type: none;
-        font-size: 1.2rem;
-      }
-      .footer-list > li {
-        margin-bottom:1rem ;
-      }
-      
-      .footer-end > span{
-        width: 35rem;
-        font-size: large;
-      }}
-
-
-</style>
