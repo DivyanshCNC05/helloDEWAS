@@ -20,9 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Email and password required.';
         exit();
     }
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+    // Store plain password directly (insecure) per user request
+    $plain = $password;
     $stmt = $mysqli->prepare('INSERT INTO admins (email, password_hash, name) VALUES (?, ?, ?)');
-    $stmt->bind_param('sss', $email, $hash, $name);
+    $stmt->bind_param('sss', $email, $plain, $name);
     if ($stmt->execute()) {
         header('Location: admin-login.html?error=created');
         exit();

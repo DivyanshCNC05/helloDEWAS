@@ -17,7 +17,7 @@ if ($email === '' || $password === '') {
 }
 
 // Find admin by email
-$stmt = $mysqli->prepare('SELECT email, password_hash, name FROM admins WHERE email = ? LIMIT 2');
+$stmt = $mysqli->prepare('SELECT id, email, password, name FROM admins WHERE email = ? LIMIT 2');
 if (!$stmt) {
     error_log('Prepare failed: ' . $mysqli->error);
     header('Location: admin-login.html?error=invalid');
@@ -29,7 +29,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($row = $result->fetch_assoc()) {
-    if (password_verify($password, $row['password_hash'])) {
+    // Plain-text password comparison (not recommended for production)
+    if (hash_equals($row['password'], $password)) {
         login_admin($row);
         header('Location: dashboard.php');
         exit();
