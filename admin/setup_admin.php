@@ -1,6 +1,4 @@
 <?php
-// A tiny admin setup script to create an initial admin user.
-// Use once and then remove or protect this file.
 require_once __DIR__ . '/db.php';
 $mysqli = require __DIR__ . '/db.php';
 
@@ -34,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// show a tiny form if GET
+// Show form if GET
 ?>
 <!DOCTYPE html>
 <html>
@@ -50,6 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Password: <input type="password" name="password" required></label><br>
         <button type="submit">Create</button>
     </form>
-    <p>After creating the first admin, remove or secure this file.</p>
+    <p>After creating the first admin, remove or protect this file.</p>
 </body>
 </html>

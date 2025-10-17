@@ -1,5 +1,4 @@
 <?php
-// auth.php - small helper to manage sessions and protect pages
 session_start();
 
 function ensure_logged_in() {
@@ -10,13 +9,11 @@ function ensure_logged_in() {
 }
 
 function login_admin($admin_row) {
-    // store minimal info in session
     $_SESSION['admin'] = [
         'id' => $admin_row['id'],
         'email' => $admin_row['email'],
         'name' => $admin_row['name'] ?? null,
     ];
-    // regenerate session id to mitigate fixation
     session_regenerate_id(true);
 }
 
