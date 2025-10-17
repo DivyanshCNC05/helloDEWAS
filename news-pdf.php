@@ -83,69 +83,38 @@
     <p class="section-subtitle">Bringing you the latest stories, events, and voices that capture the true spirit of our city — Dewas.</p>
 
     <div class="row g-4">
-      <div class="col-lg-3 col-md-6">
-        <div class="card h-100">
-          <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News 1">
-          <div class="card-body">
-            <p class="date">March 15, 2025</p>
-            <p class="category">City Updates / Local News</p>
-            <p class="desc">Road development, cleanliness drives, government events, or new public facilities.</p>
-          </div>
-          <div class="card-footer action-links">
-            <a href="#" class="read">Read News</a>
-            <a href="#" class="pdf">View PDF</a>
-            <a href="#" class="share">Share ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card h-100">
-          <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News 2">
-          <div class="card-body">
-            <p class="date">March 15, 2025</p>
-            <p class="category">City Updates / Local News</p>
-            <p class="desc">Road development, cleanliness drives, government events, or new public facilities.</p>
-          </div>
-          <div class="card-footer action-links">
-            <a href="#" class="read">Read News</a>
-            <a href="#" class="pdf">View PDF</a>
-            <a href="#" class="share">Share ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card h-100">
-          <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News 3">
-          <div class="card-body">
-            <p class="date">March 15, 2025</p>
-            <p class="category">City Updates / Local News</p>
-            <p class="desc">Road development, cleanliness drives, government events, or new public facilities.</p>
-          </div>
-          <div class="card-footer action-links">
-            <a href="#" class="read">Read News</a>
-            <a href="#" class="pdf">View PDF</a>
-            <a href="#" class="share">Share ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="card h-100">
-          <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News 4">
-          <div class="card-body">
-            <p class="date">March 15, 2025</p>
-            <p class="category">City Updates / Local News</p>
-            <p class="desc">Road development, cleanliness drives, government events, or new public facilities.</p>
-          </div>
-          <div class="card-footer action-links">
-            <a href="#" class="read">Read News</a>
-            <a href="#" class="pdf">View PDF</a>
-            <a href="#" class="share">Share ↗</a>
-          </div>
-        </div>
-      </div>
+      <?php
+      // Load DB config and connect
+      $config = require __DIR__ . '/.env';
+      $mysqli = new mysqli($config['host'], $config['user'], $config['pass'], $config['dbname'], $config['port']);
+      if ($mysqli->connect_errno) {
+          echo '<div class="col-12"><p class="text-danger">Database connection failed.</p></div>';
+      } else {
+  $res = $mysqli->query("SELECT `pdf_id` AS pdf_id, title, published_at, thumbnail FROM newspaper ORDER BY published_at DESC LIMIT 12");
+          if ($res) {
+              while ($r = $res->fetch_assoc()) {
+          $thumb = !empty($r['thumbnail']) ? $r['thumbnail'] : 'https://via.placeholder.com/400x200';
+          $title = htmlspecialchars($r['title'] ?? 'Untitled');
+          $published = !empty($r['published_at']) ? date('F j, Y', strtotime($r['published_at'])) : '';
+                  echo "<div class=\"col-lg-3 col-md-6\">";
+                  echo "<div class=\"card h-100\">";
+                  echo "<img src=\"" . htmlspecialchars($thumb) . "\" class=\"card-img-top\" alt=\"" . $title . "\">";
+                  echo "<div class=\"card-body\">";
+                  echo "<p class=\"date\">" . htmlspecialchars($published) . "</p>";
+                  echo "<h5 class=\"category\">" . $title . "</h5>";
+                  echo "</div>"; // card-body
+                  echo "<div class=\"card-footer action-links\">";
+                  echo "<a href=\"view-pdf.php?pdf_id=" . urlencode($r['pdf_id']) . "\" class=\"pdf\" target=\"_blank\">View PDF</a>";
+                  echo "</div>"; // card-footer
+                  echo "</div>"; // card
+                  echo "</div>"; // col
+              }
+              $res->free();
+          } else {
+              echo '<div class="col-12"><p>No news found.</p></div>';
+          }
+      }
+      ?>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
