@@ -71,8 +71,10 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             <div class="col-2"></div>
             <div class="col-4 py-5 cust-card">
                 <center>
-                    <img src="../assets/admin-events.png" alt="" class="admin-img img-fluid">
-                    <h3 class="admin-title">Event Management</h3>
+                    <a href="./event-pannel.php" class="text-white text-decoration-none">
+                        <img src="../assets/admin-events.png" alt="" class="admin-img img-fluid">
+                        <h3 class="admin-title">Event Management</h3>
+                    </a>
                 </center>
             </div>
             <div class="col-1"></div>
@@ -82,15 +84,19 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             <div class="col-1"></div>
             <div class="col-4 py-5 cust-card">
                 <center>
-                    <img src="../assets/admin-newspaper.png" alt="" class="admin-img img-fluid">
-                    <h3 class="admin-title">Newspaper management</h3>
+                    <a href="./newspaper-pannel.php" class="text-white text-decoration-none">
+                        <img src="../assets/admin-newspaper.png" alt="" class="admin-img img-fluid">
+                        <h3 class="admin-title">Newspaper management</h3>
+                    </a>
                 </center>
             </div>
             <div class="col-2"></div>
             <div class="col-4 py-5 cust-card">
                 <center>
-                    <img src="../assets/admin-banner.png" alt="" class="admin-img img-fluid">
-                    <h3 class="admin-title">Banner Management</h3>
+                    <a href="./banner-pannel.php" class="text-white text-decoration-none">
+                        <img src="../assets/admin-banner.png" alt="" class="admin-img img-fluid">
+                        <h3 class="admin-title">Banner Management</h3>
+                    </a>
                 </center>
             </div>
             <div class="col-2"></div>

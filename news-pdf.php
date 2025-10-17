@@ -37,29 +37,14 @@
       height: 200px;
       object-fit: cover;
     }
-    .card-body {
-      padding: 20px;
-    }
-    .date {
-      color: #ff6f61;
-      font-weight: 600;
-    }
-    .category {
-      font-weight: 600;
-      margin-top: 5px;
-      color: #333;
-    }
-    .desc {
-      color: #666;
-      font-size: 0.9rem;
-      margin: 10px 0;
-    }
+    .card-body { padding: 20px; }
+    .date { color: #ff6f61; font-weight: 600; }
+    .category { font-weight: 600; margin-top: 5px; color: #333; }
     .card-footer {
       background: transparent;
       border-top: none;
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
     }
     .action-links a {
       font-size: 0.9rem;
@@ -67,56 +52,69 @@
       font-weight: 500;
       margin-right: 15px;
     }
-    .read { color: #ff6f61; }
     .pdf { color: #ffb400; }
-    .share { color: #008cff; }
-    @media (max-width: 768px) {
-      .section-title {
-        font-size: 2rem;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="section-title">Hello Dewas Publications</h1>
-    <p class="section-subtitle">Bringing you the latest stories, events, and voices that capture the true spirit of our city — Dewas.</p>
+    <p class="section-subtitle">
+      Bringing you the latest stories, events, and voices that capture the true spirit of our city — Dewas.
+    </p>
 
     <div class="row g-4">
       <?php
-      // Load DB config and connect
+      // Load DB config
       $config = require __DIR__ . '/.env';
       $mysqli = new mysqli($config['host'], $config['user'], $config['pass'], $config['dbname'], $config['port']);
+
       if ($mysqli->connect_errno) {
-          echo '<div class="col-12"><p class="text-danger">Database connection failed.</p></div>';
+          echo '<div class="col-12"><p class="text-danger">Database connection failed: ' 
+              . htmlspecialchars($mysqli->connect_error) . '</p></div>';
       } else {
-  $res = $mysqli->query("SELECT `pdf_id` AS pdf_id, title, published_at, thumbnail FROM newspaper ORDER BY published_at DESC LIMIT 12");
-          if ($res) {
+          $sql = "SELECT pdf_id, title, published_at, thumbnail FROM newspaper ORDER BY published_at DESC LIMIT 12";
+          $res = $mysqli->query($sql);
+
+          if ($res && $res->num_rows > 0) {
               while ($r = $res->fetch_assoc()) {
-          $thumb = !empty($r['thumbnail']) ? $r['thumbnail'] : 'https://via.placeholder.com/400x200';
-          $title = htmlspecialchars($r['title'] ?? 'Untitled');
-          $published = !empty($r['published_at']) ? date('F j, Y', strtotime($r['published_at'])) : '';
-                  echo "<div class=\"col-lg-3 col-md-6\">";
-                  echo "<div class=\"card h-100\">";
-                  echo "<img src=\"" . htmlspecialchars($thumb) . "\" class=\"card-img-top\" alt=\"" . $title . "\">";
-                  echo "<div class=\"card-body\">";
-                  echo "<p class=\"date\">" . htmlspecialchars($published) . "</p>";
-                  echo "<h5 class=\"category\">" . $title . "</h5>";
-                  echo "</div>"; // card-body
-                  echo "<div class=\"card-footer action-links\">";
-                  echo "<a href=\"view-pdf.php?pdf_id=" . urlencode($r['pdf_id']) . "\" class=\"pdf\" target=\"_blank\">View PDF</a>";
-                  echo "</div>"; // card-footer
-                  echo "</div>"; // card
-                  echo "</div>"; // col
+                  // Determine image path
+                  $thumb = trim($r['thumbnail']);
+                  if (!empty($thumb)) {
+                      // Add relative path if necessary
+                      if (strpos($thumb, './uploads/') === 0) {
+                          $thumb = '../' . $thumb;  // adjust if needed
+                      }
+                  } else {
+                      $thumb = 'assets/no-thumb.jpg'; // local fallback
+                  }
+
+                  $title = htmlspecialchars($r['title'] ?? 'Untitled');
+                  $published = !empty($r['published_at'])
+                      ? date('F j, Y', strtotime($r['published_at']))
+                      : '';
+
+                  echo '<div class="col-lg-3 col-md-6">';
+                  echo '  <div class="card h-100">';
+                  echo '    <img src="' . htmlspecialchars($thumb) . '" class="card-img-top" alt="' . $title . '">';
+                  echo '    <div class="card-body">';
+                  echo '      <p class="date">' . htmlspecialchars($published) . '</p>';
+                  echo '      <h5 class="category">' . $title . '</h5>';
+                  echo '    </div>';
+                  echo '    <div class="card-footer action-links">';
+                  echo '      <a href="view-pdf.php?pdf_id=' . urlencode($r['pdf_id']) . '" class="pdf" target="_blank">View PDF</a>';
+                  echo '    </div>';
+                  echo '  </div>';
+                  echo '</div>';
               }
               $res->free();
           } else {
-              echo '<div class="col-12"><p>No news found.</p></div>';
+              echo '<div class="col-12"><p class="text-center text-muted">No publications found.</p></div>';
           }
       }
       ?>
     </div>
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

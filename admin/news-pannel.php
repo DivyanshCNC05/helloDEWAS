@@ -191,16 +191,24 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                     <img src="../assets/logo.hd.webp" alt="" class="cust-hd-logo img-fluid">
                 </center>
                 <div class="row py-4 px-4 text-center text-white">
-                    <h4 class="cust-type">News Management</h4>
+                    <a href="./news-pannel.php" class="text-white text-decoration-none">
+                        <h4 class="cust-type">News Management</h4>
+                    </a>
                 </div>
                 <div class="row py-4 px-4 text-center text-white">
-                    <h4 class="cust-type">Event Management</h4>
+                    <a href="./event-pannel.php" class="text-white text-decoration-none">
+                        <h4 class="cust-type">Event Management</h4>
+                    </a>
+                    </div>
+                <div class="row py-4 px-4 text-center text-white">
+                    <a href="./newspaper-pannel.php" class="text-white text-decoration-none">
+                        <h4 class="cust-type">Newspaper management</h4>
+                    </a>
                 </div>
                 <div class="row py-4 px-4 text-center text-white">
-                    <h4 class="cust-type">Newspaper management</h4>
-                </div>
-                <div class="row py-4 px-4 text-center text-white">
-                    <h4 class="cust-type">Banner Management</h4>
+                    <a href="./banner-pannel.php" class="text-white text-decoration-none">
+                        <h4 class="cust-type">Banner Management</h4>
+                    </a>
                 </div>
             </div>
             <div class="col-10" style=" height: 100vh; background-image: url('../assets/admin-bg.jpg'); background-size: cover; background-repeat: no-repeat;">

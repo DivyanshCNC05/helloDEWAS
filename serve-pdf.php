@@ -7,46 +7,60 @@ if ($mysqli->connect_errno) {
     echo 'DB connection failed';
     exit;
 }
-$pdf_id = $_GET['pdf-id'] ?? null;
+
+// accept either pdf_id or legacy pdf-id parameter
+$pdf_id = $_GET['pdf_id'] ?? $_GET['pdf-id'] ?? null;
 if (!$pdf_id) {
     http_response_code(400);
-    echo 'Missing pdf-id';
+    echo 'Missing pdf_id';
     exit;
 }
-// Use prepared statement to fetch PDF column
-$stmt = $mysqli->prepare('SELECT `pdf` FROM newspaper WHERE `pdf-id` = ? LIMIT 1');
+
+// Use prepared statement to fetch PDF column; assume column name is `pdf_id`
+$stmt = $mysqli->prepare('SELECT `pdf` FROM `newspaper` WHERE `pdf_id` = ? LIMIT 1');
 if (!$stmt) {
     http_response_code(500);
     echo 'Prepare failed';
     exit;
 }
-$stmt->bind_param('s', $pdf_id);
+$id_int = (int)$pdf_id;
+$stmt->bind_param('i', $id_int);
 $stmt->execute();
 $stmt->bind_result($pdfData);
 if ($stmt->fetch()) {
     $stmt->close();
-    // Determine if pdfData is a path or raw binary
-    if (is_string($pdfData) && (strpos($pdfData, 'http://') === 0 || strpos($pdfData, 'https://') === 0)) {
-        // Redirect to external URL
+    if (!isset($pdfData) || $pdfData === null || $pdfData === '') {
+        http_response_code(404);
+        echo 'PDF data empty';
+        exit;
+    }
+
+    // If pdfData looks like a URL, redirect
+    if (is_string($pdfData) && (stripos($pdfData, 'http://') === 0 || stripos($pdfData, 'https://') === 0)) {
         header('Location: ' . $pdfData);
         exit;
     }
-    // If it looks like a relative path or filename, serve by redirecting to the file
+
+    // If it looks like a filesystem path (contains slash or ends with .pdf), try serving the file
     if (is_string($pdfData) && (strpos($pdfData, '/') !== false || preg_match('/\.pdf$/i', $pdfData))) {
-        // Check if file exists on disk
+        // normalize and resolve path
         $path = __DIR__ . '/' . ltrim($pdfData, '/');
-        if (file_exists($path)) {
+        if (file_exists($path) && is_readable($path)) {
             header('Content-Type: application/pdf');
             header('Content-Length: ' . filesize($path));
+            header('Content-Disposition: inline; filename="' . basename($path) . '"');
             readfile($path);
             exit;
         }
     }
-    // Otherwise assume it's raw PDF binary data and output it
+
+    // Otherwise assume it's raw PDF binary data
     header('Content-Type: application/pdf');
+    header('Content-Disposition: inline');
     echo $pdfData;
     exit;
 }
+
 $stmt->close();
 http_response_code(404);
 echo 'PDF not found';
