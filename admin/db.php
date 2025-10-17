@@ -19,6 +19,6 @@ if ($mysqli->connect_errno) {
 // Set charset
 $mysqli->set_charset('utf8mb4');
 
-echo "Connection successful";
+
 
 return $mysqli;
