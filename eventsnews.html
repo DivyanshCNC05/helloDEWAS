@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Events</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f3f3f3;
+      font-family: 'Poppins', sans-serif;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .main-card img {
+      width: 100%;
+      height: 525px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+    .event-card img {
+      width: 100%;
+      height: 112px;
+      object-fit: contain;
+      border-radius: 1px;
+    }
+    .event-info {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .read-more {
+      color: #ff6f61;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .read-more:hover {
+      text-decoration: underline;
+    }
+    .stats-box {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    .load-more-btn {
+      background: #1c1c1c;
+      color: #fff;
+      border-radius: 25px;
+      padding: 10px 30px;
+    }
+    .stat-img{
+        background-image: url('./Assets/siide-news-baaner.png');
+        object-fit: cover;
+        width: 100%;
+        height: 230px;
+        background-repeat: no-repeat;}
+    .card-img img{
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    @media (max-width: 992px) {
+      .main-card img {
+        height: 530px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container p-5 ">
+    
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <h2 class="section-title ">Upcoming Events</h2>
+        <div class="main-card position-relative">
+          <img src="./Assets/news-banner-1.png" alt="Main Event">
+          <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
+            <small><i class="bi bi-calendar"></i> March 24, 2025</small>
+            <h5 class="mt-1">बैस नवमी की तैयारियों को लेकर प्रशासन सतर्क</h5>
+            <a href="#" class="read-more">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex gap-2 event-card">
+            <img src="./Assets/small-news-baner1.png" alt="Small Event" class="rounded">
+            <div>
+              <small class="text-danger">March 15, 2025</small>
+              <h6 class="mb-1">What’s Next in Dewas</h6>
+              <p class="event-info mb-1">Discover the events that bring Dewas together.</p>
+            </div>
+          </div>
+          <div class="d-flex gap-2 event-card">
+            <img src="./Assets/small-news-baner1.png" alt="Small Event" class="rounded">
+            <div>
+              <small class="text-danger">March 15, 2025</small>
+              <h6 class="mb-1">Experience the city, one event at a time</h6>
+              <p class="event-info mb-1">Discover the events that bring Dewas together.</p>
+            </div>
+          </div>
+          <div class="d-flex gap-2 event-card">
+            <img src="./Assets/small-news-baner1.png" alt="Small Event" class="rounded">
+            <div>
+              <small class="text-danger">March 15, 2025</small>
+              <h6 class="mb-1">Experience the city, one event at a time</h6>
+              <p class="event-info mb-1">Discover the events that bring Dewas together.</p>
+            </div>
+          </div>
+          <div class="d-flex gap-2 event-card">
+            <img src="./Assets/small-news-baner1.png" alt="Small Event" class="rounded">
+            <div>
+              <small class="text-danger">March 15, 2025</small>
+              <h6 class="mb-1">Experience the city, one event at a time</h6>
+              <p class="event-info mb-1">Discover the events that bring Dewas together.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Region covered by district</p>
+          <h5>7,020 sq km</h5>
+        </div>
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Total People in district</p>
+          <h5>15.63 lac</h5>
+        </div>
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Region covered by city</p>
+          <h5>50 sq km</h5>
+        </div>
+        <div class="stats-box stat-img text-center">
+          <!-- <p>Best local news & updates platform hello dewas</p>
+          <a href="#" class="btn btn-outline-dark btn-sm">Read Now</a> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="card border-0 shadow-sm card-img">
+          <img src="./Assets/news-img1.png" class="card-img-top" alt="News">
+          <div class="card-body">
+            <small class="text-danger">March 15, 2025</small>
+            <h6 class="mt-2">नागदल के गौरी समाज के पूर्व अध्यक्ष व वरिष्ठ भाजपा नेता विष्णु मोदी का हुआ निधन</h6>
+            <a href="#" class="read-more">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card border-0 shadow-sm card-img">
+          <img src="./Assets/news-img1.png" class="card-img-top" alt="News">
+          <div class="card-body">
+            <small class="text-danger">March 15, 2025</small>
+            <h6 class="mt-2">देवास जिले को पायलेट के रूप में किया गया चयन...</h6>
+            <a href="#" class="read-more">Read More</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="card border-0 shadow-sm card-img">
+          <img src="./Assets/news-img1.png" class="card-img-top" alt="News">
+          <div class="card-body">
+            <small class="text-danger">March 15, 2025</small>
+            <h6 class="mt-2">फर्जी कॉल सेंटरों पर देवास पुलिस की बड़ी कार्यवाही</h6>
+            <a href="#" class="read-more">Read More</a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn load-more-btn">Load More</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
