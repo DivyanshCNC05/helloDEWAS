@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meet City Council - Image Edge to Edge</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+   
+   <style>
       
-    
     body {
         background-color: #1a0044; /* Deep purple/dark background color */
         color: #ffffff; /* White text for contrast */
@@ -32,7 +33,6 @@
         margin-bottom: 30px;
     }
 
-    /* Styling for the horizontal scroll container */
     .card-scroll-container {
         display: flex;
         overflow-x: auto;
@@ -40,12 +40,11 @@
         -webkit-overflow-scrolling: touch;
         gap: 20px;
         justify-content: flex-start;
-        padding: 20px 0;
+        padding: 20px; /* Added padding on sides for better scroll experience */
         margin: 0 auto;
         max-width: 1300px;
     }
 
-    /* Hide scrollbar for a cleaner look (optional) */
     .card-scroll-container::-webkit-scrollbar {
         display: none;
     }
@@ -54,97 +53,132 @@
         scrollbar-width: none;
     }
 
-    /* === KEY CHANGES START HERE === */
-
     .member-card {
-        flex: 0 0 auto;
-        width: 280px;
+        flex: 0 0 auto; 
+        width: 280px; 
+        height: 400px; /* Keep height fixed for consistent card size */
         background-color: #2c016c;
         border: none;
         border-radius: 8px;
-        text-align: center;
-        /* REMOVED PADDING to allow image to touch edges */
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease;
-        /* CRUCIAL: Hides the square corners of the image within the rounded card */
-        overflow: hidden; 
+        overflow: hidden; /* CRUCIAL: Hides the square corners of the image within the rounded card */
+         backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
     }
 
-    .member-card:hover {
-        transform: translateY(-5px);
-    }
+   
+
+.member-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.member-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+}
+
 
     .member-image-container {
-        height: 250px;
-        margin-bottom: 0; /* Ensures no gap between image and details section */
-        overflow: hidden;
+        height: 250px; /* Fixed height for the image container */
+        margin-bottom: 0; 
+        overflow: hidden; /* Ensures anything outside this container's bounds is clipped */
         border-radius: 0; 
     }
 
     .member-image {
-        width: 350px;
+        /* CRUCIAL FIXES FOR IMAGE COVERAGE */
+        width: 100%;
         height: 100%;
-        /* CRUCIAL: Fixes the minor top space. display: block removes any potential inline element spacing */
-         display: block;   
-        /* object-fit: cover; */
+        object-fit: cover; /* Ensures the image covers all four sides without distortion */
+        /* display: block; */
     }
 
-    /* NEW: This container holds all the text and contact info */
+   
     .member-details {
-        /* This re-introduces padding for the text content only */
-        padding: 15px; 
-        padding-top: 10px; /* Adjust top space for separation from image */
-        text-align: left; /* Set text alignment for the details */
+        padding: 0 15px; /* Consistent horizontal padding */
+        text-align: left; 
     }
 
     .member-name {
-        font-size: 1.25rem;
+        font-size: 1rem;
         font-weight: 700;
         color: #fff;
         margin-bottom: 5px;
-        text-align: center; /* Center the name */
+        text-align: left; 
+        padding-top: 15px; /* Spacing from the image */
     }
 
     .member-title {
         font-size: 0.9rem;
         color: #a491d2;
-        margin-bottom: 15px;
-        min-height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center; /* Center the title/designation */
+        min-height: 40px; /* Ensures consistent height even if title is short */
+        display: block;
+        text-align: left;
+        margin-bottom: 10px;
     }
 
     .member-contact-info {
-        padding-top: 10px;
-        /* The border-top now respects the side padding of .member-details */
-        border-top: 1px solid rgba(255, 255, 255, 0.1); 
+        padding-top: 5px; 
         text-align: left;
     }
     
-    .member-contact-info p {
-        margin-bottom: 5px;
+    .member-contact-info b {
+        /* margin-bottom: 15px;  */
         font-size: 0.85rem;
-        color: #ccc;
+        color: rgb(210, 145, 6);
+        display: flex; /* Aligns icon and text */
+        align-items: center;
     }
+    
+    .member-contact-info p a {
+         color: inherit; 
+         text-decoration: none;
+    }
+
 
     .member-contact-info .icon {
-        /* Updated icon color based on the screenshot, closer to pink/orange */
-        color: #ff6699; 
-        margin-right: 8px;
+        background-color:#1a0044 ;
+        margin-right: 8px; 
+        font-size: 1rem; 
     }
 
-    .member-contact-info img{
-       padding-right: 30px;
-       height: 200px;
-       width: 150px;
+    /* Responsive adjustments for small screens */
+    @media (max-width: 767.98px) {
+        .card-scroll-container {
+            /* On mobile, cards will still scroll horizontally. */
+            /* We don't want flex-wrap here, as it would stack them, breaking the horizontal scroll intent. */
+            justify-content: flex-start; /* Ensure cards start from the left */
+        }
 
+        .member-card {
+            width: 280px; /* Maintain fixed width for horizontal scroll effect */
+        }
     }
     
 
 </style>
-    </style>
 </head>
 <body>
 
@@ -161,32 +195,37 @@
 
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <div class="card-scroll-container mx-auto">
+                    <div class="card-scroll-container mx-auto text-start">
 
                         <div class="member-card">
                             <div class="member-image-container">
-                                <img src="/Assets/Rectangle 2 (4).png" alt="Gayatri Raje Puar" class="member-image">
+                                <img src="Assets/Rectangle 2 (4).png" alt="Gayatri Raje Puar" class="member-image">
                             </div>
                             <div class="member-details">
                                 <h3 class="member-name">Gayatri Raje Puar</h3>
                                 <p class="member-title">Member of Madhya Pradesh Legislative Assembly from Dewas</p>
                                 <div class="member-contact-info">
-                                  <p><span class="icon bi bi-twitter"></span></p>
-                                    <p><span class="icon"></span> Phone: NA</p>
+                                  <p><a href="https://twitter.com/yourprofile" target="_blank" class="icon">
+                                <i class="bi bi-twitter-x"></i>
+                                </a></p>
+
+                                     <p> <b>Phone: NA</b></p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="member-card">
                             <div class="member-image-container">
-                                <img src="/Assets/Rectangle 2.png" alt="Rishav Gupta" class="member-image">
+                                <img src="Assets/Rectangle 2.png" alt="Rishav Gupta" class="member-image">
                             </div>
                             <div class="member-details">
                                 <h3 class="member-name">Rishav Gupta</h3>
                                 <p class="member-title">District Collector & District Magistrate Of Dewas City of Madhya Pradesh</p>
                                 <div class="member-contact-info">
-                                     <p><span class="icon"></span> <a href="#"></a></p>
-                                    <p><span class="icon"></span> Phone: +917272-252111</p>
+                                    <p><a href="https://twitter.com/yourprofile" target="_blank" class="icon">
+                                <i class="bi bi-twitter-x"></i>
+                                </a></p>
+                                     <p> <b>Phone: NA</b></p>
                                    
                                 </div>
                             </div>
@@ -194,14 +233,16 @@
 
                         <div class="member-card">
                             <div class="member-image-container">
-                                <img src="/Assets/Rectangle 2 (1).png" alt="Rajneesh Kasera" class="member-image">
+                                <img src="Assets/Rectangle 2 (1).png" alt="Rajneesh Kasera" class="member-image">
                             </div>
                             <div class="member-details">
                                 <h3 class="member-name">Rajneesh Kasera</h3>
                                 <p class="member-title">Commissioner Of DMC</p>
                                 <div class="member-contact-info">
-                                    <p><span class="icon"></span> <a href="#"></a></p>
-                                    <p><span class="icon"></span> Phone: +917272-220333</p>
+                                   <p><a href="https://twitter.com/yourprofile" target="_blank" class="icon">
+                                <i class="bi bi-twitter-x"></i>
+                                </a></p>
+                                 <p> <b>Phone: NA</b></p>
                                     
                                 </div>
                             </div>
@@ -209,14 +250,16 @@
 
                         <div class="member-card">
                             <div class="member-image-container">
-                                <img src="/Assets/Rectangle 2 (2).png" alt="Geeta Agrawal" class="member-image">
+                                <img src="Assets/Rectangle 2 (2).png" alt="Geeta Agrawal" class="member-image">
                             </div>
                             <div class="member-details">
                                 <h3 class="member-name">Geeta Agrawal</h3>
                                 <p class="member-title">Mayor of Dewas</p>
                                 <div class="member-contact-info">
-                                    <p><span class="icon"></span> <a href="#"></a></p>
-                                    <p><span class="icon"></span> Phone: NA</p>
+                                     <p><a href="https://twitter.com/yourprofile" target="_blank" class="icon">
+                                <i class="bi bi-twitter-x"></i>
+                                </a></p>
+                                    <p> <b>Phone: NA</b></p>
                                     
                                 </div>
                             </div>
@@ -224,14 +267,16 @@
 
                         <div class="member-card">
                             <div class="member-image-container">
-                                <img src="/Assets/Rectangle 2 (3).png" alt="Next Member" class="member-image">
+                                <img src="Assets/Rectangle 2 (3).png" alt="Mahendra Singh Solanki" class="member-image">
                             </div>
                             <div class="member-details">
                                 <h3 class="member-name">Mahendra Singh Solanki</h3>
-                                <p class="member-title">Member of Madhya Pradesh Legislative Assembly from Dewas (Placeholder)</p>
+                                <p class="member-title">Member of MP Legislative Assembly (Placeholder)</p>
                                 <div class="member-contact-info">
-                                    <p><span class="icon"></span> <a href="#"></a></p>
-                                    <p><span class="icon"></span> Phone: NA</p>
+                                   <p><a href="https://twitter.com/yourprofile" target="_blank" class="icon">
+                                <i class="bi bi-twitter-x"></i>
+                                </a></p>
+                                    <p> <b>Phone: NA</b></p>
                                     
                                 </div>
                             </div>
