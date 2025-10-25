@@ -138,7 +138,7 @@ function img_for($path, $fallback) {
         <h2 class="section-title ">Upcoming Events</h2>
         <div class="main-card position-relative">
           <?php if ($mainEvent): ?>
-            <?php $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
+            <?php $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.'); ?>
             <img src="<?= htmlspecialchars($resolvedMainImg) ?>" alt="Main Event">
             <!-- resolved_main_image: <?= htmlspecialchars($resolvedMainImg) ?> -->
             <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
@@ -235,6 +235,6 @@ function img_for($path, $fallback) {
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
