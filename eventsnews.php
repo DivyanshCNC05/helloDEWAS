@@ -134,16 +134,19 @@ foreach ($events as $e) {
       <div class="col-lg-6">
         <h2 class="section-title ">Latest News</h2>
         <div class="main-card position-relative">
-          <?php if ($mainEvent): ?>
-            <?php $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
-            <img src="<?= htmlspecialchars($resolvedMainImg) ?>" alt="Main Event">
-            <!-- resolved_main_image: <?= htmlspecialchars($resolvedMainImg) ?> -->
-            <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
-              <small><i class="bi bi-calendar"></i> <?= htmlspecialchars(date('F j, Y', strtotime($mainEvent['published_at'] ?? '')) ) ?></small>
-              <h5 class="mt-1"><?= htmlspecialchars($mainEvent['title'] ?? '') ?></h5>
-              <p class="mb-1"><?= htmlspecialchars($mainEvent['short_description'] ?? '') ?></p>
-              <a href="eventsnews.php?id=<?= urlencode($mainEvent['news_id']) ?>" class="read-more">Read More</a>
-            </div>
+          <?php if ($mainEvent):
+              $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
+              <img src="<?= htmlspecialchars($resolvedMainImg) ?>" alt="Main Event">
+              <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
+                <small><i class="bi bi-calendar"></i> <?= htmlspecialchars(!empty($mainEvent['published_at']) ? date('F j, Y', strtotime($mainEvent['published_at'])) : '') ?></small>
+                <?php if (!empty($mainEvent['categories'])): ?>
+                  <span class="ms-2 badge bg-warning text-dark"><?= htmlspecialchars($mainEvent['categories']) ?></span>
+                <?php endif; ?>
+                <h5 class="mt-1"><?= htmlspecialchars($mainEvent['title'] ?? '') ?></h5>
+                <p class="mb-1"><?= htmlspecialchars($mainEvent['short_description'] ?? '') ?></p>
+                <small class="d-inline-block me-2"><i class="bi bi-eye"></i> <?= (int)($mainEvent['view_count'] ?? 0) ?></small>
+                <a href="eventsnews.php?id=<?= urlencode($mainEvent['news_id']) ?>" class="read-more">Read More</a>
+              </div>
           <?php else: ?>
               <img src="./Assets/news-banner-1.png" alt="Main Event">
           <?php endif; ?>
@@ -232,6 +235,6 @@ foreach ($events as $e) {
     </div>
   </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
