@@ -1,0 +1,240 @@
+<?php
+// eventsnews.php - dynamic events listing using events table
+// Use the admin db connection
+$mysqli = require __DIR__ . '/admin/db.php';
+
+// If an event_id is provided, show that as main, otherwise pick the latest
+$selectedId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+// Fetch the latest news (limit to a reasonable number)
+$events = [];
+$limit = 12; // fetch up to 12 rows to populate sections
+$sql = "SELECT news_id, title, short_description, description, links, main_image, thumbnail_image, published_at FROM news ORDER BY published_at DESC LIMIT $limit";
+$res = $mysqli->query($sql);
+if ($res) {
+  while ($r = $res->fetch_assoc()) { $events[] = $r; }
+}
+
+// Build diagnostics for image paths (temporary - visible on page)
+$imageDiagnostics = [];
+foreach ($events as $ev) {
+  $stored = trim((string)($ev['main_image'] ?? ''));
+  $resolved = img_for($stored, './Assets/news-banner-1.png');
+  $isUrl = preg_match('#^https?://#i', $resolved) === 1;
+  $fsPath = null;
+  $exists = false;
+  if (!$isUrl) {
+    // normalize to filesystem path relative to this file
+    $rel = preg_replace('#^\./#', '', $resolved);
+    $fsPath = __DIR__ . '/' . $rel;
+    $exists = file_exists($fsPath);
+  }
+  $imageDiagnostics[] = [
+    'news_id' => $ev['news_id'] ?? '',
+    'stored' => $stored,
+    'resolved' => $resolved,
+    'is_url' => $isUrl,
+    'fs_path' => $fsPath,
+    'exists' => $exists,
+  ];
+}
+
+// Determine main event: prefer selected id, otherwise newest
+// use news_id for identification (selectedId comes from ?id param)
+$mainEvent = null;
+if ($selectedId) {
+  foreach ($events as $e) {
+    if ((int)($e['news_id'] ?? 0) === $selectedId) { $mainEvent = $e; break; }
+  }
+}
+if (!$mainEvent && count($events) > 0) {
+  $mainEvent = $events[0];
+}
+
+// Build top-3 small cards (exclude main) so top area shows at least 4 items total when available
+// Build top-3 small cards (exclude main)
+$topSmall = [];
+foreach ($events as $e) {
+  if ($mainEvent && (int)($e['news_id'] ?? 0) === (int)($mainEvent['news_id'] ?? 0)) continue;
+  $topSmall[] = $e;
+  if (count($topSmall) >= 3) break; // we want 3 smalls next to main
+}
+
+// Build remaining events (exclude those already shown)
+$shownIds = [];
+if ($mainEvent) $shownIds[] = (int)($mainEvent['news_id'] ?? 0);
+foreach ($topSmall as $s) $shownIds[] = (int)($s['news_id'] ?? 0);
+$remaining = [];
+foreach ($events as $e) {
+  if (in_array((int)($e['news_id'] ?? 0), $shownIds, true)) continue;
+  $remaining[] = $e;
+}
+
+// helper to resolve image path (fallback to assets)
+function img_for($path, $fallback) {
+    $p = trim((string)$path);
+    if ($p === '' || $p === null) return $fallback;
+    // if path looks like a full URL, return as-is
+    if (preg_match('#^https?://#i', $p)) return $p;
+  // Remove leading ../ segments (some admin code saved paths like '../uploads/...')
+  while (strpos($p, '../') === 0) {
+    $p = substr($p, 3);
+  }
+
+  // If starts with a leading slash, make it a relative root path
+  if (strpos($p, '/') === 0) {
+    return '.' . $p;
+  }
+
+  // If already starts with ./, return as-is
+  if (strpos($p, './') === 0) return $p;
+
+  // If it starts with uploads/ or contains uploads/, prefix ./
+  if (strpos($p, 'uploads/') === 0) return './' . $p;
+
+  // If it's just a filename (no slash), assume it's in ./uploads/
+  if (strpos($p, '/') === false) return './uploads/' . $p;
+
+  // Default: prefix ./ so browser resolves relative to this file
+  return './' . $p;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upcoming Events</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* keep same styles as original */
+<?php // Inline the original styles for brevity ?>
+    body { background-color: #f3f3f3; font-family: 'Poppins', sans-serif; }
+    .section-title { font-weight: 700; font-size: 2rem; margin-bottom: 1rem; }
+  .main-card { position: relative; overflow: hidden; border-radius: 15px; }
+  .main-card img { width: 100%; height: 525px; object-fit: cover; border-radius: 15px; display:block; }
+    .event-card img { width: 100%; height: 112px; object-fit: contain; border-radius: 1px; }
+    .event-info { font-size: 0.9rem; color: #666; }
+    .read-more { color: #ff6f61; text-decoration: none; font-weight: 500; }
+    .read-more:hover { text-decoration: underline; }
+    .stats-box { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+    .load-more-btn { background: #1c1c1c; color: #fff; border-radius: 25px; padding: 10px 30px; }
+    .stat-img{ background-image: url('./Assets/siide-news-baaner.png'); object-fit: cover; width: 100%; height: 230px; background-repeat: no-repeat; }
+    .card-img img{ width: 100%; height: 200px; object-fit: cover; }
+    @media (max-width: 992px) { .main-card img { height: 530px; } }
+  </style>
+</head>
+<body>
+  <div class="container p-5 ">
+    <!-- events_fetched: <?= htmlspecialchars(implode(',', array_map(function($e){ return $e['news_id'] ?? ''; }, $events))) ?: 'none' ?> -->
+    <div class="row g-4">
+      <div style="margin-bottom:12px">
+        <details>
+          <summary>Image diagnostics (click to expand)</summary>
+          <pre style="white-space:pre-wrap;font-size:13px;padding:8px;background:#f8f9fa;border:1px solid #eee;margin-top:8px"><?php echo htmlspecialchars(json_encode($imageDiagnostics, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)); ?></pre>
+        </details>
+      </div>
+      <div class="col-lg-6">
+        <h2 class="section-title ">Upcoming Events</h2>
+        <div class="main-card position-relative">
+          <?php if ($mainEvent): ?>
+            <?php $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
+            <img src="<?= htmlspecialchars($resolvedMainImg) ?>" alt="Main Event">
+            <!-- resolved_main_image: <?= htmlspecialchars($resolvedMainImg) ?> -->
+            <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
+              <small><i class="bi bi-calendar"></i> <?= htmlspecialchars(date('F j, Y', strtotime($mainEvent['published_at'] ?? '')) ) ?></small>
+              <h5 class="mt-1"><?= htmlspecialchars($mainEvent['title'] ?? '') ?></h5>
+              <p class="mb-1"><?= htmlspecialchars($mainEvent['short_description'] ?? '') ?></p>
+              <a href="eventsnews.php?id=<?= urlencode($mainEvent['news_id']) ?>" class="read-more">Read More</a>
+            </div>
+          <?php else: ?>
+            <img src="./Assets/news-banner-1.png" alt="Main Event">
+          <?php endif; ?>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="d-flex flex-column gap-3">
+          <?php
+          // show up to 3 small cards (these are the next-latest after main)
+          if (!empty($topSmall)) {
+              foreach ($topSmall as $ev) {
+                  $thumb = img_for($ev['thumbnail_image'] ?? '', './Assets/small-news.png');
+                  ?>
+                  <div class="d-flex gap-2 event-card">
+                    <img src="<?= htmlspecialchars($thumb) ?>" alt="Small Event" class="rounded">
+                    <div>
+                      <small class="text-danger"><?= htmlspecialchars(date('F j, Y', strtotime($ev['published_at'] ?? '')))?></small>
+                      <h6 class="mb-1"><?= htmlspecialchars($ev['title'] ?? '') ?></h6>
+                      <p class="event-info mb-1"><?= htmlspecialchars($ev['short_description'] ?? '') ?></p>
+                      <a href="eventsnews.php?id=<?= urlencode($ev['news_id']) ?>" class="read-more">Read More</a>
+                    </div>
+                  </div>
+              <?php
+              }
+          }
+          // if no events, show placeholders
+          if (count($events) === 0) :
+          ?>
+            <div class="d-flex gap-2 event-card">
+              <img src="./Assets/small-news-baner1.png" alt="Small Event" class="rounded">
+              <div>
+                <small class="text-danger">--</small>
+                <h6 class="mb-1">No Events</h6>
+                <p class="event-info mb-1">No upcoming events at this time.</p>
+              </div>
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Region covered by district</p>
+          <h5>7,020 sq km</h5>
+        </div>
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Total People in district</p>
+          <h5>15.63 lac</h5>
+        </div>
+        <div class="stats-box">
+          <p class="mb-1 fw-bold fs-6">Region covered by city</p>
+          <h5>50 sq km</h5>
+        </div>
+        <div class="stats-box stat-img text-center"></div>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+    <?php
+    // render up to 3 grid items (recent but not the top 3)
+    if (!empty($remaining)) {
+      $gridShown = 0;
+      foreach ($remaining as $ev) {
+        if ($gridShown >= 3) break;
+        $img = img_for($ev['main_image'] ?? '', './Assets/news-img1.png');
+        ?>
+              <div class="col-lg-4 col-md-6">
+                <div class="card border-0 shadow-sm card-img">
+                  <img src="<?= htmlspecialchars($img) ?>" class="card-img-top" alt="News">
+                  <div class="card-body">
+                    <small class="text-danger"><?= htmlspecialchars(date('F j, Y', strtotime($ev['published_at'] ?? '')))?></small>
+                    <h6 class="mt-2"><?= htmlspecialchars($ev['title'] ?? '') ?></h6>
+                    <p class="event-info mb-1"><?= htmlspecialchars($ev['short_description'] ?? '') ?></p>
+                    <a href="eventsnews.php?id=<?= urlencode($ev['news_id']) ?>" class="read-more">Read More</a>
+                  </div>
+                </div>
+              </div>
+          <?php
+              $gridShown++;
+          }
+      }
+      ?>
+    </div>
+
+    <div class="text-center mt-4">
+      <button class="btn load-more-btn">Load More</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
