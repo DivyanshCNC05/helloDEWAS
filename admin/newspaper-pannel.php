@@ -169,7 +169,7 @@ if ($res) {
                                         <td><?php echo (int)$r['pdf_id']; ?></td>
                                         <td><?php echo htmlspecialchars($r['title']); ?></td>
                                         <td><?php echo htmlspecialchars($r['published_at']); ?></td>
-                                        <td><a class="btn btn-sm btn-info" target="_blank" href="../view-pdf.php?pdf-id=<?php echo (int)$r['pdf_id']; ?>">View PDF</a></td>
+                                                <td><a class="btn btn-sm btn-info" target="_blank" href="../view-pdf.php?pdf_id=<?php echo (int)$r['pdf_id']; ?>">View PDF</a></td>
                                         <td>
                                             <button class="btn btn-sm btn-primary edit-btn"
                                                     data-id="<?php echo (int)$r['pdf_id']; ?>"
