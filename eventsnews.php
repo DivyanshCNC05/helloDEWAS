@@ -41,7 +41,7 @@ $topSmall = [];
 foreach ($events as $e) {
   if ($mainEvent && (int)($e['news_id'] ?? 0) === (int)($mainEvent['news_id'] ?? 0)) continue;
   $topSmall[] = $e;
-  if (count($topSmall) >= 3) break;
+  if (count($topSmall) >= 4) break;
 }
 
 // remaining
@@ -74,7 +74,7 @@ foreach ($events as $e) {
     }
     .main-card img {
       width: 100%;
-      height: 525px;
+      height: 605px;
       object-fit: cover;
       border-radius: 15px;
     }
@@ -120,19 +120,47 @@ foreach ($events as $e) {
         height: 200px;
         object-fit: cover;
     }
+    .top-baner{
+      padding: 48px;
+      }
+      .area{
+        padding-top:10px;
+        padding-bottom:10px;
+        padding-left:5px;
+        padding-right:5px;
+        color: #ffffff;
+        background-color: #011b3d;
+      }
+    
     @media (max-width: 992px) {
       .main-card img {
         height: 530px;
       }
+    } 
+
+  @media only screen   
+  and (min-device-width : 320px)   
+  and (max-device-width : 640px)  
+  { 
+    .main-card img {
+      height: 400px;
     }
+    .top-baner{
+      padding: 10px;
+      }
+    .lower-baner{
+      display: none;
+    }
+  }
+
   </style>
 </head>
 <body>
-  <div class="container-fluid p-5 ">
+  <div class="container-fluid top-baner ">
     
     <div class="row g-4">
       <div class="col-lg-6">
-        <h2 class="section-title ">Latest News</h2>
+        <h1 class="section-title ">Latest News</h1>
         <div class="main-card position-relative">
           <?php if ($mainEvent):
               $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
@@ -186,15 +214,15 @@ foreach ($events as $e) {
       <div class="col-lg-3 col-md-6">
         <div class="stats-box">
           <p class="mb-1 fw-bold fs-6">Region covered by district</p>
-          <h5>7,020 sq km</h5>
+          <h5 class="mt-3 area">7,020 sq km</h5>
         </div>
         <div class="stats-box">
           <p class="mb-1 fw-bold fs-6">Total People in district</p>
-          <h5>15.63 lac</h5>
+          <h5 class="mt-3 area">15.63 lac</h5>
         </div>
         <div class="stats-box">
           <p class="mb-1 fw-bold fs-6">Region covered by city</p>
-          <h5>50 sq km</h5>
+          <h5 class="mt-3 area">50 sq km</h5>
         </div>
         <div class="stats-box stat-img text-center">
           <!-- <p>Best local news & updates platform hello dewas</p>
@@ -203,7 +231,7 @@ foreach ($events as $e) {
       </div>
     </div>
 
-    <div class="row g-4 mt-4">
+    <div class="row g-4 mt-4 lower-baner">
       <?php
       if (!empty($remaining)) {
         $gridShown = 0;
