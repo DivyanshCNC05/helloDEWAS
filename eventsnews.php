@@ -74,13 +74,13 @@ foreach ($events as $e) {
     }
     .main-card img {
       width: 100%;
-      height: 605px;
-      object-fit: cover;
-      border-radius: 15px;
+      height: 600px;
+      object-fit: contain;
+      border-radius: 10px;
     }
     .event-card img {
       width: 100%;
-      height: 112px;
+      height: 122px;
       object-fit: contain;
       border-radius: 1px;
     }
@@ -116,8 +116,8 @@ foreach ($events as $e) {
         height: 230px;
         background-repeat: no-repeat;}
     .card-img img{
-        width: 100%;
-        height: 200px;
+        width: 89%;
+        height: 280px;
         object-fit: cover;
     }
     .top-baner{
@@ -166,14 +166,8 @@ foreach ($events as $e) {
               $resolvedMainImg = img_for($mainEvent['main_image'] ?? '', './Assets/news-banner-1.png'); ?>
               <img src="<?= htmlspecialchars($resolvedMainImg) ?>" alt="Main Event">
               <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
-                <small><i class="bi bi-calendar"></i> <?= htmlspecialchars(!empty($mainEvent['published_at']) ? date('F j, Y', strtotime($mainEvent['published_at'])) : '') ?></small>
-                <?php if (!empty($mainEvent['categories'])): ?>
-                  <span class="ms- badge bg-warning text-dark"><?= htmlspecialchars($mainEvent['categories']) ?></span>
-                <?php endif; ?>
-                <h5 class="mt-1"><?= htmlspecialchars($mainEvent['title'] ?? '') ?></h5>
-                <p class="mb-1"><?= htmlspecialchars($mainEvent['short_description'] ?? '') ?></p>
-                <small class="d-inline-block me-2"><i class="bi bi-eye"></i> <?= (int)($mainEvent['view_count'] ?? 0) ?></small>
-                <a href="eventsnews.php?id=<?= urlencode($mainEvent['news_id']) ?>" class="read-more">Read More</a>
+               
+                
               </div>
           <?php else: ?>
               <img src="./Assets/news-banner-1.png" alt="Main Event">
@@ -194,7 +188,7 @@ foreach ($events as $e) {
                     <?php endif; ?>
                     <h6 class="mb-1"><?= htmlspecialchars($ev['title'] ?? '') ?></h6>
                     <p class="event-info mb-1"><?= htmlspecialchars($ev['short_description'] ?? '') ?></p>
-                    <a href="eventsnews.php?id=<?= urlencode($ev['news_id']) ?>" class="read-more">Read More</a>
+                    
                   </div>
                 </div>
           <?php
