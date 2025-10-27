@@ -17,7 +17,7 @@ $selectedId = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
 // Fetch rows from news table
 $events = [];
-$limit = 12;
+$limit = 22;
 $sql = "SELECT news_id, title, short_description, description, links, main_image, categories, thumbnail_image, view_count, published_at FROM news ORDER BY published_at DESC LIMIT $limit";
 $res = $mysqli->query($sql);
 $sqlError = null;
@@ -128,7 +128,7 @@ foreach ($events as $e) {
   </style>
 </head>
 <body>
-  <div class="container p-5 ">
+  <div class="container-fluid p-5 ">
     
     <div class="row g-4">
       <div class="col-lg-6">
@@ -140,7 +140,7 @@ foreach ($events as $e) {
               <div class="position-absolute bottom-0 start-0 text-white p-3" style="background:rgba(0,0,0,0.4); border-radius:0 0 15px 15px;">
                 <small><i class="bi bi-calendar"></i> <?= htmlspecialchars(!empty($mainEvent['published_at']) ? date('F j, Y', strtotime($mainEvent['published_at'])) : '') ?></small>
                 <?php if (!empty($mainEvent['categories'])): ?>
-                  <span class="ms-2 badge bg-warning text-dark"><?= htmlspecialchars($mainEvent['categories']) ?></span>
+                  <span class="ms- badge bg-warning text-dark"><?= htmlspecialchars($mainEvent['categories']) ?></span>
                 <?php endif; ?>
                 <h5 class="mt-1"><?= htmlspecialchars($mainEvent['title'] ?? '') ?></h5>
                 <p class="mb-1"><?= htmlspecialchars($mainEvent['short_description'] ?? '') ?></p>
