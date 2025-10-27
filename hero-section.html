@@ -1,100 +1,259 @@
-<style>
-
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.hero-section {
-  height: 100vh;
-  background: url('/Assets/Rectangle\ 1.png') no-repeat center center/cover;
-  position: relative;
-  z-index: 1;
-}
-
-.text-white{
-    padding-top: 15%;
-}
-/* Button styles */
-.buton .btn-about {
-  background-color: #011B3D;
-  color: white;
-  border: none;
-  /* border-radius: 25px; */
-  padding: 10px 35px;
-}
-
-.btn-outline-light {
-  border-radius: 25px;
-  padding: 10px 20px;
-}
-
-
-h1, h2,p {
-  color: #fff;
-  
-}
-
-.lead h1{
-    font-size: 0.8rem;
-}
-
-.lead p{
-    font-size: 1rem;
-}
-
-.lead h1{
-    font-size: 4rem;
-}
-
-.navbar-nav {
-  gap: 20px; /* space between each nav link */
-}
-
-.nav-link {
-  position: relative;
-  padding-right: 18px; /* space between text and arrow */
-}
-
-.nav-item:not(:first-child) .nav-link::after {
-  content: "˅";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
-}
-
-
-
-</style>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hello Dewas</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
+  <style>
+    /* ---------- BASE ---------- */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+    }
 
-  <link rel="stylesheet" href="style.css">
+    /* ---------- HERO SECTION ---------- */
+    .hero-section {
+      height: 100vh;
+      background: url('/Assets/Rectangle 1.png') no-repeat center center/cover;
+      position: relative;
+      z-index: 1;
+    }
+
+    .text-white {
+      padding-top: 15%;
+    }
+
+    h1, h2, p {
+      color: #fff;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .buton .btn-about {
+      background-color: #011B3D;
+      color: white;
+      border: none;
+      padding: 10px 35px;
+    }
+
+    .btn-outline-light {
+      border-radius: 25px;
+      padding: 10px 20px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      padding: 10px 20px;
+      position: fixed;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .navbar-nav {
+      gap: 18px;
+      padding-right: 100px;
+    }
+
+    .nav-link {
+      position: relative;
+      padding-right: 18px;
+      color: #fff !important;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #d2a506 !important;
+    }
+
+    .nav-item:not(:first-child) .nav-link::after {
+      content: "˅";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+    }
+
+    /* ---------- BRAND (LOGO) ---------- */
+    .navbar-brand img {
+      height: 90px;
+      width: 90px;
+      display: block;
+    }
+
+    /* ---------- TOGGLER ---------- */
+    .navbar-toggler {
+      border: none;
+      z-index: 11;
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+
+    /* ---------- RIGHT ICONS ---------- */
+    .nav-right {
+       display: flex; 
+       align-items: center; 
+      gap: 10px;
+
+    }
+
+    .nav-right i {
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+       padding-top: 30px; 
+    }
+
+    .nav-right .btn-outline-light {
+      font-size: 0.9rem;
+      padding: 6px 10px;
+     
+    }
+
+    /* ---------- DESKTOP (≥992px) ---------- */
+    @media (min-width: 992px) {
+      .navbar-brand {
+        position: relative;
+        left: 0;
+        transform: none;
+      }
+
+      .navbar-collapse {
+        justify-content: center;
+      }
+
+      .nav-right {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+      }
+
+      .nav-right .btn-outline-light {
+        display: inline-block !important;
+      }
+
+      .nav-right .bi-person-lines-fill {
+        display: none !important;
+      }
+    }
+
+    /* ---------- MOBILE (<992px) ---------- */
+    @media (max-width: 991px) {
+      .navbar {
+        background-color: transparent !important;
+      }
+
+      /* Toggler left */
+      .navbar-toggler {
+        position: absolute;
+        left: 10px;
+        top: 25px;
+      }
+
+      /* Logo centered */
+      .navbar-brand {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 10px;
+      }
+
+      .navbar-brand img {
+        height: 70px;
+        width: 70px;
+      }
+
+      /* Right icons */
+      .nav-right {
+        position: absolute;
+         right: 15px; 
+        top: 10px; 
+        gap: 10px;
+      }
+
+      .nav-right .btn-outline-light {
+        display: none !important;
+      }
+
+      .nav-right .bi-person-lines-fill {
+        display: inline-block !important;
+        font-size: 1.2rem;
+      }
+
+      /* Collapsed Menu */
+      .navbar-collapse {
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 10px;
+        padding: 15px 0;
+        margin-top: 85px;
+      }
+
+      .navbar-nav {
+        gap: 10px;
+      }
+
+      .nav-link {
+        color: #fff !important;
+        font-size: 1rem;
+      }
+
+      /* Hero adjustments */
+      .hero-section {
+        height: auto;
+        padding-top: 120px;
+        padding-bottom: 60px;
+        text-align: center;
+      }
+
+      .text-white {
+        padding-top: 0;
+      }
+
+      .lead h2 {
+        font-size: 1.2rem;
+      }
+
+      .lead h1 {
+        font-size: 2.3rem;
+        line-height: 1.3;
+      }
+
+      .lead p {
+        font-size: 1rem;
+        color: #f5f5f5;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="/Assets/logo.hd.webp" alt="Hello Dewas" height="100" width="100">
-      </a>
+    <div class="container position-relative">
+
+      <!-- Mobile toggler -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-center  " id="navbarNav">
+
+      <!-- Brand Logo -->
+      <a class="navbar-brand" href="#">
+        <img src="/Assets/logo.hd.webp" alt="Hello Dewas">
+      </a>
+
+      <!-- Center Nav Links -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#">About Dewas</a></li>
@@ -103,26 +262,25 @@ rel="stylesheet">
           <li class="nav-item"><a class="nav-link" href="#">Events</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Stories</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Our Services</a></li>
-         
         </ul>
       </div>
-<li class="nav-item d-flex align-items-center">
-  <i class="bi bi-search text-light fs-6 me-3"></i>
-  <a class="btn btn-outline-light" href="#">Contact With Us</a>
-</li>
 
-
-
+      <!-- Right Section -->
+      <div class="nav-right d-flex align-items-center">
+        <i class="bi bi-search"></i>
+        <a href="#" class="btn btn-outline-light d-none d-lg-inline">Contact With Us</a>
+        <i class="bi bi-person-lines-fill d-inline d-lg-none"></i>
+      </div>
 
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero-section d-flex ">
+  <section class="hero-section d-flex">
     <div class="container text-white lead">
       <h2 class="fw-bold">Welcome to</h2>
       <h1 class="fw-bold display-4">hello! DEWAS</h1>
-      <p class=" mt-3">Arching you towards the unexplored aspects of the city</p>
+      <p class="mt-3">Arching you towards the unexplored aspects of the city</p>
       <div class="mt-4 buton">
         <a href="#" class="btn btn-about me-2">About Dewas</a>
         <a href="#" class="btn btn-outline-light">Latest News</a>

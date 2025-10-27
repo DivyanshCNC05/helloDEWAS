@@ -20,114 +20,133 @@
 
     /* === Section Styling === */
     .discover-section {
-      background-color: #011B3D; /* full width color */
-      padding: 50px 0;
+      background-color: #011B3D;
+      padding: 60px 0;
       position: relative;
       overflow: hidden;
     }
 
-   .discover-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 20px; 
-    display: inline-block;
-    position: relative; 
-}
+    /* === Heading and Border === */
+    .discover-title {
+      font-weight: 700;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+      color: #fff;
+    }
 
-.discover-title::after {
-    content: ""; 
-    display: inline-block;
-    position: absolute;
-    background-color: rgb(210, 145, 6); 
-    height: 3px; 
-    width: 700px; 
-    top: 50%; 
-    margin-left: 15px; 
-  
-}
+    /* Border line after heading */
+    .discover-title::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      background-color: rgb(210, 145, 6);
+      height: 3px;
+      width: 180px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 15px;
+    }
 
-   
-  
+    /* === Responsive Font Sizes for Heading === */
+    @media (min-width: 1200px) {
+      .discover-title { font-size: 2.8rem; }
+      .discover-title::after { width: 220px; }
+    }
+
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      .discover-title { font-size: 2.3rem; }
+      .discover-title::after { width: 180px; }
+    }
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      .discover-title { font-size: 2rem; }
+      .discover-title::after { width: 140px; }
+    }
+
+    @media (min-width: 576px) and (max-width: 767.98px) {
+      .discover-title { font-size: 1.7rem; }
+      .discover-title::after { width: 100px; }
+    }
+
+    @media (max-width: 575.98px) {
+      .discover-title { 
+        font-size: 1.5rem; 
+        display: block;
+        text-align: center;
+      }
+      .discover-title::after { 
+        position: static; 
+        display: block; 
+        margin: 10px auto 0; 
+        width: 80px; 
+        height: 3px;
+      }
+    }
+
+    /* === Card Styling === */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.13);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      padding: 40px 25px;
+      color: white;
+      height: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.18);
+    }
 
     .glass-card .icon {
-      font-size: 35px;
-       /* margin-bottom: 20px; */
-      /* padding-top: 0; */
-      color: #ffffff;
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #ffd166;
     }
 
     .glass-card h5 {
       font-weight: 600;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
     }
 
     .glass-card p {
       font-size: 0.9rem;
       color: #dcdcdc;
-      /* margin: 0; */
+      margin: 0;
     }
 
-    .glass-card {
-  background: rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-  padding: 40px 25px;
-  color: white;
-  position: relative;
-  overflow: hidden;
-  height: 80%; 
-  /* text-align: center; */
-}
-
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
-}
-
-.glass-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.8),
-    transparent,
-    rgba(255, 255, 255, 0.3)
-  );
-}
-
-
-
-    /* Responsive adjustments */
-    @media (max-width: 991px) {
-      .discover-title {
-        font-size: 2rem;
+    /* === Force 2 Cards Per Row on All Mobile Sizes === */
+    @media (max-width: 991.98px) {
+      .col-mobile-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
       }
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 575.98px) {
       .glass-card {
         padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .glass-card {
+        padding: 25px 15px;
+      }
+      .glass-card .icon {
+        font-size: 32px;
+      }
+      .glass-card h5 {
+        font-size: 1rem;
+      }
+      .glass-card p {
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -137,82 +156,79 @@
 
   <!-- ===== Discover Section ===== -->
   <section class="discover-section">
-    <div class="container px-5">
+    <div class="container px-4">
       <h2 class="discover-title">Discover the City</h2>
 
       <div class="row g-3 justify-content-center">
-        <!-- Row 1 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <!-- 8 Cards -->
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-geo-alt-fill icon"></i>
             <h5>Sightseeing</h5>
             <p>Explore historical & cultural spots</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-heart-pulse icon"></i>
             <h5>Health & Fitness</h5>
             <p>Wellness, gyms & clinics</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-mortarboard-fill icon"></i>
             <h5>Education & Skills</h5>
             <p>Schools, colleges & learning centers</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-person-running icon"></i>
             <h5>Health & Sports</h5>
             <p>Playgrounds, stadiums & activities</p>
           </div>
         </div>
-        </div>
-  <div class="row g-3 justify-content-center">
-        <!-- Row 2 -->
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-briefcase icon"></i>
             <h5>Jobs & Training</h5>
             <p>Career & skill development</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-bag-fill icon"></i>
             <h5>Shopping at Dewas</h5>
             <p>Markets & local stores</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-bus-front-fill icon"></i>
             <h5>Roads & Transportation</h5>
             <p>Travel & connectivity</p>
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-6">
-          <div class="glass-card">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-mobile-6">
+          <div class="glass-card text-center">
             <i class="bi bi-building icon"></i>
             <h5>Business & Industries</h5>
             <p>Industrial growth & opportunities</p>
           </div>
         </div>
       </div>
-      </div>
-    
+    </div>
   </section>
 
-  <!-- Bootstrap JS (optional) -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
