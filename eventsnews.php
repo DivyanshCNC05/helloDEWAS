@@ -29,7 +29,7 @@ if ($res) {
 
 // determine main event
 $mainEvent = null;
-if ($selectedId) {
+if ($events) {
   foreach ($events as $e) {
     if ((int)($e['news_id'] ?? 0) === $selectedId) { $mainEvent = $e; break; }
   }
@@ -116,12 +116,12 @@ foreach ($events as $e) {
         height: 230px;
         background-repeat: no-repeat;}
     .card-img img{
-        width: 89%;
-        height: 280px;
+        width: 99%;
+        height: 290px;
         object-fit: cover;
     }
     .top-baner{
-      padding: 48px;
+      padding: 70px;
       }
       .area{
         padding-top:10px;
