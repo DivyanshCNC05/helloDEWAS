@@ -3,14 +3,8 @@
 // Load DB connection
 $mysqli = require __DIR__ . '/admin/db.php';
 
-// helper to resolve image path (fallback to assets)
-function img_for($path, $fallback) {
-  // Return the image value as stored in the database without adding or modifying paths.
-  // If the DB value is empty, use the provided fallback path.
-  $p = trim((string)$path);
-  if ($p === '' || $p === null) return $fallback;
-  return $p;
-}
+// Include shared helper functions
+require_once __DIR__ . '/includes/helpers.php';
 
 // If an id is provided, show that as main, otherwise pick the latest
 $selectedId = isset($_GET['id']) ? (int)$_GET['id'] : null;

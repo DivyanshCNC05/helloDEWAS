@@ -17,18 +17,8 @@ if ($result) {
   $error = $mysqli->error;
 }
 
-// 3️⃣ Helper function for safe image path
-function img_for($path, $fallback = './Assets/slider-placeholder.png') {
-  $p = trim((string)$path);
-  if ($p === '' || $p === null) return $fallback;
-  if (preg_match('#^https?://#i', $p)) return $p;
-  while (strpos($p, '../') === 0) $p = substr($p, 3);
-  if (strpos($p, '/') === 0) return '.' . $p;
-  if (strpos($p, './') === 0) return $p;
-  if (strpos($p, 'uploads/') === 0) return './' . $p;
-  if (strpos($p, '/') === false) return './uploads/' . $p;
-  return './' . $p;
-}
+// Include shared helper functions
+require_once __DIR__ . '/includes/helpers.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
