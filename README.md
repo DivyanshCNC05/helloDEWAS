@@ -1,2 +1,2 @@
-# helloDEWAS
-hello!DEWAS Website
+# helloDewaswebsite
+News Website using mern stack
