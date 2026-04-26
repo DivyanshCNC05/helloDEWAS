@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const Event = require("../models/Event");
+const auth = require("../middleware/auth");
 
 // ---------- Multer setup ----------
 const storage = multer.diskStorage({
@@ -30,6 +31,7 @@ function fileUrl(file) {
 // ---------- CREATE EVENT ----------
 router.post(
   "/",
+  auth,
   upload.fields([
     { name: "main_image", maxCount: 1 },
     { name: "thumbnail_image", maxCount: 1 },
@@ -83,6 +85,7 @@ router.post(
 // ---------- UPDATE EVENT ----------
 router.put(
   "/:id",
+  auth,
   upload.fields([
     { name: "main_image", maxCount: 1 },
     { name: "thumbnail_image", maxCount: 1 },
@@ -169,7 +172,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     await Event.findByIdAndDelete(req.params.id);
     res.json({ message: "Event deleted" });

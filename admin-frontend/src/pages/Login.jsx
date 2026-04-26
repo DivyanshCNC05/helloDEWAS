@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../apiClient.js";
+import { useAuth } from "../context/AuthContext.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,14 +27,14 @@ export default function Login() {
     setLoading(true);
     try {
       console.log("📡 Attempting login with email:", email);
-      const res = await axios.post(`http://127.0.0.1:5000/api/auth/login`, {
+      const res = await api.post("/api/auth/login", {
         email,
         password,
       });
       console.log("✅ Login successful:", res.data);
+      await login(res.data.token);
       setSuccess(true);
-      localStorage.setItem("token", res.data.token);
-      setTimeout(() => navigate("/dashboard"), 1500);
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       console.error("❌ Login error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Invalid credentials");

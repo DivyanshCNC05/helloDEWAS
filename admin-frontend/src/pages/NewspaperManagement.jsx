@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../apiClient.js";
 import API_BASE_URL from "../config.js";
 import "./NewspaperManagement.css";
 
@@ -33,7 +33,7 @@ export default function NewspaperManagement() {
   const fetchPapers = async () => {
     try {
       console.log("📡 Fetching newspapers from:", `${API_BASE_URL}/api/newspapers`);
-      const res = await axios.get(`${API_BASE_URL}/api/newspapers`);
+      const res = await api.get(`${API_BASE_URL}/api/newspapers`);
       console.log("✅ Newspapers fetched successfully:", res.data);
       setPapers(res.data);
     } catch (error) {
@@ -78,7 +78,7 @@ export default function NewspaperManagement() {
       form.append("thumbnail", thumbnail);
 
       console.log("📤 Uploading newspaper to:", `${API_BASE_URL}/api/newspapers`);
-      const res = await axios.post(`${API_BASE_URL}/api/newspapers`, form);
+      const res = await api.post(`${API_BASE_URL}/api/newspapers`, form);
       console.log("✅ Newspaper uploaded successfully:", res.data);
 
       alert("✅ Newspaper added successfully!");
@@ -109,7 +109,7 @@ export default function NewspaperManagement() {
       if (thumbnail) form.append("thumbnail", thumbnail);
 
       console.log("📤 Updating newspaper:", selectedPaper._id);
-      const res = await axios.put(`${API_BASE_URL}/api/newspapers/${selectedPaper._id}`, form);
+      const res = await api.put(`${API_BASE_URL}/api/newspapers/${selectedPaper._id}`, form);
       console.log("✅ Newspaper updated successfully:", res.data);
 
       alert("✅ Newspaper updated successfully!");
@@ -126,7 +126,7 @@ export default function NewspaperManagement() {
     if (window.confirm("Are you sure you want to delete this newspaper?")) {
       try {
         console.log("🗑️ Deleting newspaper:", id);
-        await axios.delete(`${API_BASE_URL}/api/newspapers/${id}`);
+        await api.delete(`${API_BASE_URL}/api/newspapers/${id}`);
         console.log("✅ Newspaper deleted successfully");
         fetchPapers();
       } catch (error) {

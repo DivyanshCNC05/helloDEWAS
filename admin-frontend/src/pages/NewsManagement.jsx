@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config.js";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../apiClient.js";
 import "./NewsManagement.css";
 
 export default function NewsManagement() {
@@ -27,7 +27,7 @@ export default function NewsManagement() {
   const fetchNews = async () => {
      try {
     console.log("📡 Fetching news from:", `${API_BASE_URL}/api/news`);
-    const res = await axios.get(`${API_BASE_URL}/api/news`);
+    const res = await api.get(`${API_BASE_URL}/api/news`);
     console.log("✅ News fetched successfully:", res.data);
     setNewsList(res.data);
   } catch (error) {
@@ -65,7 +65,7 @@ export default function NewsManagement() {
       form.append("thumbnail", thumbnail);
 
       console.log("📤 Uploading news to:", `${API_BASE_URL}/api/news`);
-      const res = await axios.post(`${API_BASE_URL}/api/news`, form);
+      const res = await api.post(`${API_BASE_URL}/api/news`, form);
       console.log("✅ News uploaded successfully:", res.data);
 
       alert("✅ News posted successfully!");
@@ -111,7 +111,7 @@ export default function NewsManagement() {
       if (thumbnail) form.append("thumbnail", thumbnail);
 
       console.log("📤 Updating news:", selectedNews._id);
-      const res = await axios.put(`${API_BASE_URL}/api/news/${selectedNews._id}`, form);
+      const res = await api.put(`${API_BASE_URL}/api/news/${selectedNews._id}`, form);
       console.log("✅ News updated successfully:", res.data);
 
       alert("✅ News updated successfully!");
@@ -131,7 +131,7 @@ export default function NewsManagement() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this news?")) {
       try {
-        await axios.delete(`${API_BASE_URL}/api/news/${id}`);
+        await api.delete(`${API_BASE_URL}/api/news/${id}`);
         fetchNews();
       } catch (error) {
         console.error("Error deleting news:", error);

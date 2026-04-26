@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Banner = require("../models/Banner");
 const upload = require("../middleware/upload");
+const auth = require("../middleware/auth");
 
 // ✅ CREATE / UPLOAD banner with TWO images
 router.post(
   "/",
+  auth,
   upload.fields([
     { name: "desktop_image", maxCount: 1 },
     { name: "mobile_image", maxCount: 1 },
@@ -75,7 +77,7 @@ router.get("/", async (req, res) => {
 });
 
 // ✅ DELETE banner
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
     await Banner.findByIdAndDelete(id);

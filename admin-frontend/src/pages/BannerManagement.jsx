@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../apiClient.js";
 import API_BASE_URL from "../config.js";
 import "./NewsManagement.css";
 
@@ -18,7 +18,7 @@ export default function BannerManagement() {
 
   const fetchBanners = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/banners`);
+      const res = await api.get(`${API_BASE_URL}/api/banners`);
       setBanners(res.data);
     } catch (err) {
       console.error("Error fetching banners:", err.response?.data || err.message);
@@ -55,7 +55,7 @@ export default function BannerManagement() {
       form.append("categories", formData.categories);
       form.append("display", formData.display);
 
-      await axios.post(`${API_BASE_URL}/api/banners`, form);
+      await api.post(`${API_BASE_URL}/api/banners`, form);
 
       // reset form
       setFormVisible(false);
@@ -75,7 +75,7 @@ export default function BannerManagement() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this banner?")) return;
     try {
-      await axios.delete(`${API_BASE_URL}/api/banners/${id}`);
+      await api.delete(`${API_BASE_URL}/api/banners/${id}`);
       fetchBanners();
     } catch (err) {
       console.error("Error deleting banner:", err.response?.data || err.message);

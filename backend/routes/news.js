@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const News = require("../models/News");
+const auth = require("../middleware/auth");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("../config/cloudinary");
@@ -80,6 +81,7 @@ router.put("/:id/view", async (req, res) => {
 =========================== */
 router.post(
   "/",
+  auth,
   upload.fields([
     { name: "main_image", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
@@ -122,6 +124,7 @@ router.post(
 =========================== */
 router.put(
   "/:id",
+  auth,
   upload.fields([
     { name: "main_image", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
@@ -165,7 +168,7 @@ router.put(
 /* ===========================
    DELETE NEWS
 =========================== */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const news = await News.findByIdAndDelete(req.params.id);
     if (!news) return res.status(404).json({ message: "News not found" });

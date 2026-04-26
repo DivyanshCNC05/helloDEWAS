@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const Newspaper = require("../models/Newspaper");
+const auth = require("../middleware/auth");
 
 // ✅ Setup Storage (for PDF/Image uploads)
 const fs = require("fs");
@@ -37,6 +38,7 @@ function fileUrl(file, uploadFolderName) {
 // ✅ Create newspaper
 router.post(
   "/",
+  auth,
   upload.fields([
     { name: "file", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
@@ -129,6 +131,7 @@ router.get("/:id", async (req, res) => {
 // ✅ Update newspaper
 router.put(
   "/:id",
+  auth,
   upload.fields([
     { name: "file", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
@@ -158,7 +161,7 @@ router.put(
 );
 
 // ✅ Delete newspaper
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const { id } = req.params;
     await Newspaper.findByIdAndDelete(id);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../apiClient.js";
 import API_BASE_URL from "../config.js";
 import "./EventManagement.css";
 
@@ -39,7 +39,7 @@ export default function EventManagement() {
   const fetchEvents = async () => {
     try {
       console.log("📡 Fetching events from:", `${API_BASE_URL}/api/events`);
-      const res = await axios.get(`${API_BASE_URL}/api/events`);
+      const res = await api.get(`${API_BASE_URL}/api/events`);
       console.log("✅ Events fetched successfully:", res.data);
 
       // normalize old + new style events
@@ -116,7 +116,7 @@ export default function EventManagement() {
       if (thumbnail) form.append("thumbnail_image", thumbnail);
 
       console.log("📤 Creating event at:", `${API_BASE_URL}/api/events`);
-      const res = await axios.post(`${API_BASE_URL}/api/events`, form);
+      const res = await api.post(`${API_BASE_URL}/api/events`, form);
       console.log("✅ Event created:", res.data);
 
       alert("✅ Event added successfully!");
@@ -168,7 +168,7 @@ export default function EventManagement() {
       if (thumbnail) form.append("thumbnail_image", thumbnail);
 
       console.log("📤 Updating event:", selectedEvent._id);
-      const res = await axios.put(
+      const res = await api.put(
         `${API_BASE_URL}/api/events/${selectedEvent._id}`,
         form
       );
@@ -195,7 +195,7 @@ export default function EventManagement() {
     if (window.confirm("Are you sure you want to delete this event?")) {
       try {
         console.log("🗑️ Deleting event:", id);
-        await axios.delete(`${API_BASE_URL}/api/events/${id}`);
+        await api.delete(`${API_BASE_URL}/api/events/${id}`);
         console.log("✅ Event deleted");
         fetchEvents();
       } catch (error) {

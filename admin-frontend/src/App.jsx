@@ -1,6 +1,4 @@
-// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import AdminLayout from "./components/AdminLayout";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -9,24 +7,14 @@ import EventManagement from "./pages/EventManagement";
 import NewspaperManagement from "./pages/NewspaperManagement";
 import BannerManagement from "./pages/BannerManagement";
 import Diagnostic from "./pages/Diagnostic";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./context/AuthContext.jsx";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // For testing: if no token, set a test token
-    let token = localStorage.getItem("token");
-    if (!token) {
-      localStorage.setItem("token", "test-token-dev");
-      token = "test-token-dev";
-    }
-    setIsLoggedIn(!!token);
-    setLoading(false);
-  }, []);
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return <div className="text-center mt-5">Validating session...</div>;
   }
 
   return (
@@ -34,57 +22,73 @@ function App() {
       <Routes>
         {/* Diagnostic route - public, no auth required */}
         <Route path="/diagnostic" element={<Diagnostic />} />
-        
-        <Route path="/login" element={<Login />} />
 
-        {/* all protected routes wrapped in AdminLayout */}
-        {isLoggedIn && (
-          <>
-            <Route
-              path="/dashboard"
-              element={
-                <AdminLayout>
-                  <Dashboard />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/news"
-              element={
-                <AdminLayout>
-                  <NewsManagement />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/events"
-              element={
-                <AdminLayout>
-                  <EventManagement />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/banners"
-              element={
-                <AdminLayout>
-                  <BannerManagement />
-                </AdminLayout>
-              }
-            />
-            <Route
-              path="/newspapers"
-              element={
-                <AdminLayout>
-                  <NewspaperManagement />
-                </AdminLayout>
-              }
-            />
-          </>
-        )}
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? <Navigate to="/dashboard" replace /> : <Login />
+          }
+        />
 
-        {/* catch-all should be last */}
-        <Route path="*" element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Dashboard />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/news"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <NewsManagement />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/events"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <EventManagement />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/banners"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BannerManagement />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/newspapers"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <NewspaperManagement />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />}
+        />
       </Routes>
     </Router>
   );
